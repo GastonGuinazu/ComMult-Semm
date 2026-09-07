@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: #f8fafc;
+}
+
+/* Foco visible reforzado para navegación por teclado (accesibilidad) */
+:focus-visible {
+  outline: 3px solid #0e7490;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Utilidad para ocultar visualmente pero mantener accesible a lectores de pantalla */
+.sr-only-focusable:not(:focus):not(:focus-within) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
