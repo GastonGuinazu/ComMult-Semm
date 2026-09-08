@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { X } from "lucide-react";
 import InteractiveSimulator from "./InteractiveSimulator";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface SimulatorModalProps {
   isOpen: boolean;
@@ -10,7 +11,17 @@ interface SimulatorModalProps {
 }
 
 export default function SimulatorModal({ isOpen, onClose }: SimulatorModalProps) {
+  const { language } = useLanguage();
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  const t = {
+    eyebrow: language === "es" ? "Simulador interactivo" : "Interactive simulator",
+    title:
+      language === "es"
+        ? "Misión Práctica: Estacioná tu auto"
+        : "Practice Mission: Park your car",
+    close: language === "es" ? "Cerrar simulador" : "Close simulator",
+  };
 
   useEffect(() => {
     if (!isOpen) return;
@@ -46,13 +57,13 @@ export default function SimulatorModal({ isOpen, onClose }: SimulatorModalProps)
         <div className="flex shrink-0 items-center gap-4 border-b border-slate-100 px-6 py-5">
           <div className="min-w-0 flex-1">
             <p className="text-xs font-bold uppercase tracking-wide text-cyan-800">
-              Simulador interactivo
+              {t.eyebrow}
             </p>
             <h2
               id="simulator-titulo"
               className="text-xl font-extrabold text-slate-900 sm:text-2xl"
             >
-              Misión Práctica: Estacioná tu auto
+              {t.title}
             </h2>
           </div>
 
@@ -60,7 +71,7 @@ export default function SimulatorModal({ isOpen, onClose }: SimulatorModalProps)
             ref={closeButtonRef}
             type="button"
             onClick={onClose}
-            aria-label="Cerrar simulador"
+            aria-label={t.close}
             className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-600 transition hover:bg-slate-200 hover:text-slate-900"
           >
             <X className="h-6 w-6" aria-hidden="true" />
@@ -69,7 +80,7 @@ export default function SimulatorModal({ isOpen, onClose }: SimulatorModalProps)
 
         {/* Body */}
         <div className="flex min-h-0 flex-1 overflow-y-auto px-6 py-6 sm:px-8">
-          <InteractiveSimulator />
+          <InteractiveSimulator onClose={onClose} />
         </div>
       </div>
     </div>

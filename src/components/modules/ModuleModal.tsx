@@ -5,13 +5,20 @@ import { X } from "lucide-react";
 import type { ModuleData } from "./types";
 import TutorialCarousel from "./TutorialCarousel";
 import ModuleFourFaq from "./ModuleFourFaq";
+import { pick, useLanguage } from "@/context/LanguageContext";
 
 interface ModuleModalProps {
   module: ModuleData | null;
   onClose: () => void;
+  onComplete: () => void;
 }
 
-export default function ModuleModal({ module, onClose }: ModuleModalProps) {
+export default function ModuleModal({
+  module,
+  onClose,
+  onComplete,
+}: ModuleModalProps) {
+  const { language } = useLanguage();
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -34,6 +41,9 @@ export default function ModuleModal({ module, onClose }: ModuleModalProps) {
   if (!module) return null;
 
   const Icon = module.icon;
+  const moduleLabel = language === "es" ? "Módulo" : "Module";
+  const closeLabel = language === "es" ? "Cerrar módulo" : "Close module";
+  const title = pick(module.title, language);
 
   return (
     <div
@@ -53,13 +63,13 @@ export default function ModuleModal({ module, onClose }: ModuleModalProps) {
 
           <div className="min-w-0 flex-1">
             <p className="text-xs font-bold uppercase tracking-wide text-cyan-800">
-              Módulo {module.number}
+              {moduleLabel} {module.number}
             </p>
             <h2
               id="modal-titulo"
               className="text-xl font-extrabold text-slate-900 sm:text-2xl"
             >
-              {module.title}
+              {title}
             </h2>
           </div>
 
@@ -67,7 +77,7 @@ export default function ModuleModal({ module, onClose }: ModuleModalProps) {
             ref={closeButtonRef}
             type="button"
             onClick={onClose}
-            aria-label="Cerrar módulo"
+            aria-label={closeLabel}
             className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-600 transition hover:bg-slate-200 hover:text-slate-900"
           >
             <X className="h-6 w-6" aria-hidden="true" />
@@ -76,7 +86,12 @@ export default function ModuleModal({ module, onClose }: ModuleModalProps) {
 
         <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-6 py-4 sm:px-8">
           <div className="flex h-full min-h-0 flex-1 flex-col">
-            <ModalContent module={module} />
+            <ModalContent
+              module={module}
+              title={title}
+              onComplete={onComplete}
+              onClose={onClose}
+            />
           </div>
         </div>
       </div>
@@ -84,7 +99,17 @@ export default function ModuleModal({ module, onClose }: ModuleModalProps) {
   );
 }
 
-function ModalContent({ module }: { module: ModuleData }) {
+function ModalContent({
+  module,
+  title,
+  onComplete,
+  onClose,
+}: {
+  module: ModuleData;
+  title: string;
+  onComplete: () => void;
+  onClose: () => void;
+}) {
   let content = null;
 
   switch (module.resourceType) {
@@ -92,12 +117,14 @@ function ModalContent({ module }: { module: ModuleData }) {
       content = (
         <TutorialCarousel
           slides={module.slides ?? []}
-          ariaLabel={module.title}
+          ariaLabel={title}
+          onComplete={onComplete}
+          onClose={onClose}
         />
       );
       break;
     case "faq":
-      content = <ModuleFourFaq />;
+      content = <ModuleFourFaq items={module.faqItems ?? []} />;
       break;
   }
 

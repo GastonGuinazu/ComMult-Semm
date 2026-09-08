@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 export const metadata: Metadata = {
   title: "Portal de Ayuda y Capacitación SEMM | Municipalidad de Córdoba",
@@ -15,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className="min-h-screen bg-slate-50 font-sans text-slate-900 antialiased">
-        {children}
+        <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>
   );

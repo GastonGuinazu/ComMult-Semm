@@ -4,16 +4,22 @@ import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, Smartphone } from "lucide-react";
 import type { TutorialSlide } from "./types";
+import { pick, useLanguage } from "@/context/LanguageContext";
 
 interface TutorialCarouselProps {
   slides: TutorialSlide[];
   ariaLabel?: string;
+  onComplete: () => void;
+  onClose: () => void;
 }
 
 export default function TutorialCarousel({
   slides,
-  ariaLabel = "Tutorial paso a paso",
+  ariaLabel,
+  onComplete,
+  onClose,
 }: TutorialCarouselProps) {
+  const { language } = useLanguage();
   const [emblaRef, emblaApi] = useEmblaCarousel({ align: "start" });
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [canScrollPrev, setCanScrollPrev] = useState(false);
@@ -48,19 +54,42 @@ export default function TutorialCarousel({
 
   if (slides.length === 0) return null;
 
+  const t = {
+    defaultLabel:
+      language === "es" ? "Tutorial paso a paso" : "Step-by-step tutorial",
+    carousel: language === "es" ? "carrusel" : "carousel",
+    goToStep: (n: number) =>
+      language === "es"
+        ? `Ir al paso ${n} de ${slides.length}`
+        : `Go to step ${n} of ${slides.length}`,
+    previous: language === "es" ? "Anterior" : "Previous",
+    previousAria:
+      language === "es" ? "Ir al paso anterior" : "Go to the previous step",
+    next: language === "es" ? "Siguiente" : "Next",
+    nextAria: language === "es" ? "Ir al paso siguiente" : "Go to the next step",
+    finish: language === "es" ? "Finalizar" : "Finish",
+    finishAria:
+      language === "es"
+        ? "Finalizar el tutorial y marcar el módulo como completado"
+        : "Finish the tutorial and mark the module as completed",
+  };
+
+  const regionLabel = ariaLabel ?? t.defaultLabel;
+  const isLastSlide = selectedIndex === slides.length - 1;
+
   return (
     <div className="flex h-full min-h-0 flex-col">
       <div
         className="min-h-0 flex-1 overflow-hidden"
         ref={emblaRef}
         role="region"
-        aria-roledescription="carrusel"
-        aria-label={ariaLabel}
+        aria-roledescription={t.carousel}
+        aria-label={regionLabel}
       >
         <div className="flex h-full">
           {slides.map((slide, index) => (
             <div
-              key={`${slide.title}-${index}`}
+              key={index}
               className="min-h-0 min-w-0 flex-[0_0_100%]"
               aria-hidden={index !== selectedIndex}
             >
@@ -68,24 +97,24 @@ export default function TutorialCarousel({
                 <div className="flex h-full flex-col justify-between py-4 pr-0 md:pr-8">
                   <div>
                     <p className="text-sm font-bold uppercase tracking-wide text-cyan-800">
-                      {slide.subtitle}
+                      {pick(slide.subtitle, language)}
                     </p>
                     <h3 className="mb-4 mt-2 text-3xl font-bold text-slate-800">
-                      {slide.title}
+                      {pick(slide.title, language)}
                     </h3>
                     <p className="text-lg font-normal leading-relaxed text-slate-600">
-                      {slide.description}
+                      {pick(slide.description, language)}
                     </p>
                   </div>
 
                   <div className="mt-6 shrink-0">
                     <div className="mb-4 flex items-center gap-2">
-                      {slides.map((dotSlide, dotIndex) => (
+                      {slides.map((_, dotIndex) => (
                         <button
-                          key={`${dotSlide.title}-${dotIndex}`}
+                          key={dotIndex}
                           type="button"
                           onClick={() => scrollTo(dotIndex)}
-                          aria-label={`Ir al paso ${dotIndex + 1} de ${slides.length}`}
+                          aria-label={t.goToStep(dotIndex + 1)}
                           aria-current={dotIndex === selectedIndex}
                           className={`h-3 rounded-full transition-all ${
                             dotIndex === selectedIndex
@@ -101,21 +130,34 @@ export default function TutorialCarousel({
                         type="button"
                         onClick={scrollPrev}
                         disabled={!canScrollPrev}
-                        aria-label="Ir al paso anterior"
+                        aria-label={t.previousAria}
                         className="flex h-14 flex-1 items-center justify-center gap-2 rounded-xl border-2 border-cyan-800 text-base font-bold text-cyan-800 transition hover:bg-cyan-50 disabled:cursor-not-allowed disabled:border-slate-200 disabled:text-slate-400 disabled:hover:bg-transparent"
                       >
                         <ChevronLeft className="h-5 w-5 shrink-0" aria-hidden="true" />
-                        Anterior
+                        {t.previous}
                       </button>
                       <button
                         type="button"
-                        onClick={scrollNext}
-                        disabled={!canScrollNext}
-                        aria-label="Ir al paso siguiente"
-                        className="flex h-14 flex-1 items-center justify-center gap-2 rounded-xl bg-cyan-800 text-base font-bold text-white transition hover:bg-cyan-900 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400"
+                        onClick={() => {
+                          if (isLastSlide) {
+                            onComplete();
+                            onClose();
+                            return;
+                          }
+                          scrollNext();
+                        }}
+                        disabled={!isLastSlide && !canScrollNext}
+                        aria-label={isLastSlide ? t.finishAria : t.nextAria}
+                        className={`flex h-14 flex-1 items-center justify-center gap-2 rounded-xl text-base font-bold text-white transition disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400 ${
+                          isLastSlide
+                            ? "bg-green-600 hover:bg-green-700"
+                            : "bg-cyan-800 hover:bg-cyan-900"
+                        }`}
                       >
-                        Siguiente
-                        <ChevronRight className="h-5 w-5 shrink-0" aria-hidden="true" />
+                        {isLastSlide ? t.finish : t.next}
+                        {!isLastSlide && (
+                          <ChevronRight className="h-5 w-5 shrink-0" aria-hidden="true" />
+                        )}
                       </button>
                     </div>
                   </div>
@@ -125,7 +167,7 @@ export default function TutorialCarousel({
                   {slide.image ? (
                     <img
                       src={slide.image}
-                      alt={slide.imageAlt}
+                      alt={pick(slide.imageAlt, language)}
                       className="h-full w-auto max-h-[60vh] rounded-2xl object-contain shadow-md"
                     />
                   ) : (
@@ -135,7 +177,7 @@ export default function TutorialCarousel({
                         aria-hidden="true"
                       />
                       <p className="text-sm font-medium leading-relaxed text-slate-500">
-                        {slide.imageAlt}
+                        {pick(slide.imageAlt, language)}
                       </p>
                     </div>
                   )}
@@ -147,7 +189,12 @@ export default function TutorialCarousel({
       </div>
 
       <p className="sr-only" aria-live="polite">
-        {currentSlide?.subtitle}: {currentSlide?.title}. {currentSlide?.description}
+        {currentSlide
+          ? `${pick(currentSlide.subtitle, language)}: ${pick(
+              currentSlide.title,
+              language,
+            )}. ${pick(currentSlide.description, language)}`
+          : ""}
       </p>
     </div>
   );
