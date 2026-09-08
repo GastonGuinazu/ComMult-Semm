@@ -288,13 +288,13 @@ export const MODULES: ModuleData[] = [
           en: "End it so you don't overspend",
         },
         description: {
-          es: "¡Este paso es clave! Cuando te subas al auto para irte, volvé a abrir la app y tocá el botón rojo de 'FINALIZAR'. Si te olvidás, el sistema seguirá consumiendo tu saldo.",
-          en: "This step is key! When you leave, open the app and tap the red 'FINALIZAR' button to stop charging your account. If you forget, the system will keep consuming your balance.",
+          es: "¡Este paso es clave! Cuando te subas al auto para irte, volvé a abrir la app y tocá el botón azul de 'FINALIZAR'. Si te olvidás, el sistema seguirá consumiendo tu saldo.",
+          en: "This step is key! When you leave, open the app and tap the blue 'FINALIZAR' button to stop charging your account. If you forget, the system will keep consuming your balance.",
         },
-        image: "/MisMovimientos.jfif",
+        image: "/FinalizarEstacionamiento.jfif",
         imageAlt: {
-          es: "Captura temporal de la app SEMM. Próximamente se reemplazará por la pantalla de finalizar estacionamiento.",
-          en: "Temporary screenshot of the SEMM app. It will soon be replaced by the end-parking screen.",
+          es: "Captura de la app SEMM con el estacionamiento activo y el botón azul FINALIZAR.",
+          en: "Screenshot of the SEMM app with parking in progress and the blue 'FINALIZAR' button.",
         },
       },
     ],
