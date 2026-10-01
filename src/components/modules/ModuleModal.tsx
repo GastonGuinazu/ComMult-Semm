@@ -1,11 +1,16 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 import type { ModuleData } from "./types";
 import TutorialCarousel from "./TutorialCarousel";
 import ModuleFourFaq from "./ModuleFourFaq";
+import ModuleQuiz from "./ModuleQuiz";
+import AlternativeVideo from "./AlternativeVideo";
+import ModuleObjectives from "./ModuleObjectives";
 import { pick, useLanguage } from "@/context/LanguageContext";
+
+type ModuleStage = "content" | "quiz" | "alternative";
 
 interface ModuleModalProps {
   module: ModuleData | null;
@@ -20,10 +25,12 @@ export default function ModuleModal({
 }: ModuleModalProps) {
   const { language } = useLanguage();
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const [stage, setStage] = useState<ModuleStage>("content");
 
   useEffect(() => {
     if (!module) return;
 
+    setStage("content");
     closeButtonRef.current?.focus();
     document.body.style.overflow = "hidden";
 
@@ -55,8 +62,8 @@ export default function ModuleModal({
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="flex max-h-[85vh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl">
-        <div className="flex shrink-0 items-center gap-4 border-b border-slate-100 px-6 py-5">
+      <div className="flex max-h-[85vh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl md:max-h-[90vh]">
+        <div className="flex shrink-0 items-center gap-4 border-b border-slate-100 px-6 py-4">
           <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-cyan-50 text-cyan-800">
             <Icon className="h-6 w-6" aria-hidden="true" />
           </span>
@@ -85,10 +92,15 @@ export default function ModuleModal({
         </div>
 
         <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-6 py-4 sm:px-8">
+          {stage === "content" && module.objectives && module.objectives.length > 0 && (
+            <ModuleObjectives objectives={module.objectives} />
+          )}
           <div className="flex h-full min-h-0 flex-1 flex-col">
             <ModalContent
               module={module}
               title={title}
+              stage={stage}
+              setStage={setStage}
               onComplete={onComplete}
               onClose={onClose}
             />
@@ -102,27 +114,64 @@ export default function ModuleModal({
 function ModalContent({
   module,
   title,
+  stage,
+  setStage,
   onComplete,
   onClose,
 }: {
   module: ModuleData;
   title: string;
+  stage: ModuleStage;
+  setStage: (stage: ModuleStage) => void;
   onComplete: () => void;
   onClose: () => void;
 }) {
   let content = null;
 
   switch (module.resourceType) {
-    case "tutorial":
-      content = (
-        <TutorialCarousel
-          slides={module.slides ?? []}
-          ariaLabel={title}
-          onComplete={onComplete}
-          onClose={onClose}
-        />
-      );
+    case "tutorial": {
+      const hasQuiz = (module.quiz?.length ?? 0) > 0;
+
+      if (stage === "content" || !hasQuiz) {
+        content = (
+          <TutorialCarousel
+            slides={module.slides ?? []}
+            ariaLabel={title}
+            onComplete={() => {
+              if (hasQuiz) {
+                setStage("quiz");
+              } else {
+                onComplete();
+                onClose();
+              }
+            }}
+          />
+        );
+      } else if (stage === "quiz") {
+        content = (
+          <ModuleQuiz
+            key={module.id}
+            questions={module.quiz ?? []}
+            onResult={(passed) => {
+              if (passed) {
+                onComplete();
+                onClose();
+              } else if (module.alternativeResource) {
+                setStage("alternative");
+              }
+            }}
+          />
+        );
+      } else if (stage === "alternative" && module.alternativeResource) {
+        content = (
+          <AlternativeVideo
+            resource={module.alternativeResource}
+            onRetry={() => setStage("quiz")}
+          />
+        );
+      }
       break;
+    }
     case "faq":
       content = <ModuleFourFaq items={module.faqItems ?? []} />;
       break;

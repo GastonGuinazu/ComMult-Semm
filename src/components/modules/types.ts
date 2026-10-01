@@ -20,6 +20,18 @@ export interface FaqItem {
   category?: FaqCategory;
 }
 
+export interface QuizQuestion {
+  id: string;
+  question: Localized;
+  options: Localized[];
+  correctIndex: number;
+}
+
+export interface AlternativeResource {
+  videoSrc: string;
+  caption?: Localized;
+}
+
 export interface ModuleData {
   id: string;
   number: number;
@@ -32,4 +44,7 @@ export interface ModuleData {
   buttonText?: Localized;
   slides?: TutorialSlide[];
   faqItems?: FaqItem[];
+  quiz?: QuizQuestion[];
+  alternativeResource?: AlternativeResource;
+  objectives?: Localized[];
 }

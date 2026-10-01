@@ -31,17 +31,24 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="text-lg font-bold text-white">Enlaces institucionales</p>
+            <p className="text-lg font-bold text-white">Fuentes institucionales</p>
             <ul className="mt-4 space-y-3 text-base">
               {[
-                "Municipalidad de Córdoba",
-                "Sitio oficial del SEMM",
-                "Accesibilidad del portal",
-                "Términos y condiciones",
-              ].map((label) => (
+                { label: "Municipalidad de Córdoba", href: "https://cordoba.gob.ar/" },
+                {
+                  label: "Sistema de Estacionamiento Medido (SEMM)",
+                  href: "https://cordoba.gob.ar/constatadores-urbanos/",
+                },
+                {
+                  label: "Normativa del Estacionamiento Medido",
+                  href: "https://cordoba.gob.ar/constatadores-urbanos/normativa-controladores/",
+                },
+              ].map(({ label, href }) => (
                 <li key={label}>
                   <a
-                    href="#"
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 hover:underline"
                   >
                     {label}

@@ -116,16 +116,25 @@ export default function ModulesGrid() {
           isMounted ? "" : "mt-10"
         }`}
       >
-        {MODULES.map((module) => (
-          <ModuleCard
-            key={module.id}
-            module={module}
-            {...(module.number !== 4
-              ? { isCompleted: completedModules.includes(module.number) }
-              : {})}
-            onOpen={() => setActiveModule(module)}
-          />
-        ))}
+        {MODULES.map((module) => {
+          const isLocked =
+            module.number > 1 && !completedModules.includes(module.number - 1);
+
+          return (
+            <ModuleCard
+              key={module.id}
+              module={module}
+              {...(module.number !== 4
+                ? { isCompleted: completedModules.includes(module.number) }
+                : {})}
+              isLocked={isLocked}
+              onOpen={() => {
+                if (isLocked) return;
+                setActiveModule(module);
+              }}
+            />
+          );
+        })}
       </div>
 
       <ModuleModal

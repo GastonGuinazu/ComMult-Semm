@@ -1,18 +1,20 @@
 "use client";
 
 import type { ModuleData } from "./types";
-import { CheckCircle2, PlayCircle } from "lucide-react";
+import { CheckCircle2, Lock, PlayCircle } from "lucide-react";
 import { pick, useLanguage } from "@/context/LanguageContext";
 
 interface ModuleCardProps {
   module: ModuleData;
   isCompleted?: boolean;
+  isLocked?: boolean;
   onOpen: () => void;
 }
 
 export default function ModuleCard({
   module,
   isCompleted = false,
+  isLocked = false,
   onOpen,
 }: ModuleCardProps) {
   const { language } = useLanguage();
@@ -21,6 +23,11 @@ export default function ModuleCard({
   const moduleLabel = language === "es" ? "Módulo" : "Module";
   const defaultButton = language === "es" ? "Ver Módulo" : "View Module";
   const completedLabel = language === "es" ? "Completado" : "Completed";
+  const lockedLabel = language === "es" ? "Bloqueado" : "Locked";
+  const lockedButtonLabel =
+    language === "es"
+      ? `Completá el Módulo ${module.number - 1} primero`
+      : `Complete Module ${module.number - 1} first`;
   const buttonLabel = module.buttonText
     ? pick(module.buttonText, language)
     : defaultButton;
@@ -28,10 +35,12 @@ export default function ModuleCard({
 
   return (
     <article
-      className={`flex h-full flex-col gap-5 rounded-2xl border bg-white p-6 shadow-sm transition hover:shadow-md ${
-        isCompleted
-          ? "border-green-400 ring-1 ring-green-500"
-          : "border-slate-200"
+      className={`flex h-full flex-col gap-5 rounded-2xl border bg-white p-6 shadow-sm transition ${
+        isLocked
+          ? "border-slate-200 opacity-60"
+          : isCompleted
+            ? "border-green-400 ring-1 ring-green-500 hover:shadow-md"
+            : "border-slate-200 hover:shadow-md"
       }`}
     >
       <div className="flex items-center gap-3">
@@ -41,11 +50,18 @@ export default function ModuleCard({
         <span className="text-sm font-bold uppercase tracking-wide text-cyan-800">
           {moduleLabel} {module.number}
         </span>
-        {isCompleted && (
-          <CheckCircle2
-            className="ml-auto h-6 w-6 shrink-0 text-green-600"
-            aria-label={completedLabel}
+        {isLocked ? (
+          <Lock
+            className="ml-auto h-6 w-6 shrink-0 text-slate-400"
+            aria-label={lockedLabel}
           />
+        ) : (
+          isCompleted && (
+            <CheckCircle2
+              className="ml-auto h-6 w-6 shrink-0 text-green-600"
+              aria-label={completedLabel}
+            />
+          )
         )}
       </div>
 
@@ -65,11 +81,21 @@ export default function ModuleCard({
       <button
         type="button"
         onClick={onOpen}
-        aria-label={`${buttonLabel}: ${title}`}
-        className="flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-cyan-800 text-base font-bold text-white transition hover:bg-cyan-900"
+        disabled={isLocked}
+        aria-label={isLocked ? lockedButtonLabel : `${buttonLabel}: ${title}`}
+        className="flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-cyan-800 text-base font-bold text-white transition hover:bg-cyan-900 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400"
       >
-        <PlayCircle className="h-5 w-5" aria-hidden="true" />
-        {buttonLabel}
+        {isLocked ? (
+          <>
+            <Lock className="h-5 w-5" aria-hidden="true" />
+            {lockedButtonLabel}
+          </>
+        ) : (
+          <>
+            <PlayCircle className="h-5 w-5" aria-hidden="true" />
+            {buttonLabel}
+          </>
+        )}
       </button>
     </article>
   );

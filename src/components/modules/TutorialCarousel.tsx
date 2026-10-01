@@ -10,14 +10,12 @@ interface TutorialCarouselProps {
   slides: TutorialSlide[];
   ariaLabel?: string;
   onComplete: () => void;
-  onClose: () => void;
 }
 
 export default function TutorialCarousel({
   slides,
   ariaLabel,
   onComplete,
-  onClose,
 }: TutorialCarouselProps) {
   const { language } = useLanguage();
   const [emblaRef, emblaApi] = useEmblaCarousel({ align: "start" });
@@ -70,8 +68,8 @@ export default function TutorialCarousel({
     finish: language === "es" ? "Finalizar" : "Finish",
     finishAria:
       language === "es"
-        ? "Finalizar el tutorial y marcar el módulo como completado"
-        : "Finish the tutorial and mark the module as completed",
+        ? "Finalizar el tutorial y pasar a la evaluación"
+        : "Finish the tutorial and go to the evaluation",
   };
 
   const regionLabel = ariaLabel ?? t.defaultLabel;
@@ -141,7 +139,6 @@ export default function TutorialCarousel({
                         onClick={() => {
                           if (isLastSlide) {
                             onComplete();
-                            onClose();
                             return;
                           }
                           scrollNext();
@@ -163,12 +160,12 @@ export default function TutorialCarousel({
                   </div>
                 </div>
 
-                <div className="flex h-full min-h-0 items-center justify-center py-4">
+                <div className="flex h-full min-h-0 items-center justify-center py-4 md:py-2">
                   {slide.image ? (
                     <img
                       src={slide.image}
                       alt={pick(slide.imageAlt, language)}
-                      className="h-full w-auto max-h-[60vh] rounded-2xl object-contain shadow-md"
+                      className="h-full w-auto max-h-[60vh] rounded-2xl object-contain shadow-md md:max-h-[51vh]"
                     />
                   ) : (
                     <div className="flex aspect-[9/16] w-full max-w-sm flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 p-6 text-center">

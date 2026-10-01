@@ -32,6 +32,11 @@ export const MODULES: ModuleData[] = [
       es: "Tutorial paso a paso para descargar la app SEMM e iniciar el registro.",
       en: "Step-by-step tutorial to download the SEMM app and start the registration.",
     },
+    objectives: [
+      { es: "Descargar la app", en: "Download the app" },
+      { es: "Buscarla e instalarla", en: "Find and install it" },
+      { es: "Abrirla por primera vez", en: "Open it for the first time" },
+    ],
     slides: [
       {
         subtitle: { es: "PASO 1 DE 6", en: "STEP 1 OF 6" },
@@ -130,6 +135,54 @@ export const MODULES: ModuleData[] = [
         },
       },
     ],
+    quiz: [
+      {
+        id: "modulo-1-q1",
+        question: {
+          es: "¿Cómo se llama la tienda de aplicaciones en un iPhone?",
+          en: "What is the app store called on an iPhone?",
+        },
+        options: [
+          { es: "Play Store", en: "Play Store" },
+          { es: "App Store", en: "App Store" },
+          { es: "SEMM Store", en: "SEMM Store" },
+        ],
+        correctIndex: 1,
+      },
+      {
+        id: "modulo-1-q2",
+        question: {
+          es: "¿Qué palabras tenés que escribir en el buscador de la tienda?",
+          en: "What words do you need to type in the store's search bar?",
+        },
+        options: [
+          { es: "estacionamiento cordoba", en: "parking cordoba" },
+          { es: "municipalidad cordoba", en: "cordoba municipality" },
+          { es: "semm cordoba", en: "semm cordoba" },
+        ],
+        correctIndex: 2,
+      },
+      {
+        id: "modulo-1-q3",
+        question: {
+          es: "¿Cuánto cuesta descargar la aplicación SEMM?",
+          en: "How much does it cost to download the SEMM app?",
+        },
+        options: [
+          { es: "Es gratuita", en: "It's free" },
+          { es: "Cuesta $1000", en: "It costs $1000" },
+          { es: "Hay que pagar con Mercado Pago antes de instalarla", en: "You have to pay with Mercado Pago before installing it" },
+        ],
+        correctIndex: 0,
+      },
+    ],
+    alternativeResource: {
+      videoSrc: "/videos/modulo-1.mp4",
+      caption: {
+        es: "Mirá este video si todavía tenés dudas sobre cómo descargar e instalar la app.",
+        en: "Watch this video if you still have doubts about how to download and install the app.",
+      },
+    },
   },
   {
     id: "modulo-2",
@@ -156,6 +209,11 @@ export const MODULES: ModuleData[] = [
       es: "Tutorial paso a paso sobre medios de pago y carga de saldo.",
       en: "Step-by-step tutorial about payment methods and adding balance.",
     },
+    objectives: [
+      { es: "Agregar tu vehículo", en: "Add your vehicle" },
+      { es: "Cargar saldo", en: "Add balance" },
+      { es: "Pagar con Mercado Pago", en: "Pay with Mercado Pago" },
+    ],
     slides: [
       {
         subtitle: { es: "PASO 1 DE 4", en: "STEP 1 OF 4" },
@@ -222,6 +280,54 @@ export const MODULES: ModuleData[] = [
         },
       },
     ],
+    quiz: [
+      {
+        id: "modulo-2-q1",
+        question: {
+          es: "¿Qué botón tocás primero para registrar tu auto?",
+          en: "Which button do you tap first to register your car?",
+        },
+        options: [
+          { es: "CARGAR SALDO", en: "CARGAR SALDO" },
+          { es: "+ VEHÍCULO", en: "+ VEHÍCULO" },
+          { es: "AGREGAR", en: "AGREGAR" },
+        ],
+        correctIndex: 1,
+      },
+      {
+        id: "modulo-2-q2",
+        question: {
+          es: "¿Cómo tenés que escribir tu patente?",
+          en: "How should you type your license plate?",
+        },
+        options: [
+          { es: "Con espacios y guiones", en: "With spaces and dashes" },
+          { es: "Sin espacios ni guiones", en: "Without spaces or dashes" },
+          { es: "Solo con las letras, sin los números", en: "Only the letters, without the numbers" },
+        ],
+        correctIndex: 1,
+      },
+      {
+        id: "modulo-2-q3",
+        question: {
+          es: "¿Con qué medio de pago se carga saldo en la app?",
+          en: "Which payment method is used to add balance in the app?",
+        },
+        options: [
+          { es: "Mercado Pago", en: "Mercado Pago" },
+          { es: "Transferencia bancaria por teléfono", en: "Bank transfer by phone call" },
+          { es: "Efectivo en la municipalidad", en: "Cash at the municipal office" },
+        ],
+        correctIndex: 0,
+      },
+    ],
+    alternativeResource: {
+      videoSrc: "/videos/modulo-2.mp4",
+      caption: {
+        es: "Mirá este video si todavía tenés dudas sobre cómo cargar saldo en tu cuenta.",
+        en: "Watch this video if you still have doubts about how to add balance to your account.",
+      },
+    },
   },
   {
     id: "modulo-3",
@@ -248,6 +354,11 @@ export const MODULES: ModuleData[] = [
       es: "Tutorial paso a paso para iniciar y finalizar el estacionamiento.",
       en: "Step-by-step tutorial to start and end parking.",
     },
+    objectives: [
+      { es: "Iniciar el estacionamiento", en: "Start parking" },
+      { es: "Controlar el tiempo", en: "Keep track of the time" },
+      { es: "Finalizar correctamente", en: "End it properly" },
+    ],
     slides: [
       {
         subtitle: { es: "PASO 1 DE 3", en: "STEP 1 OF 3" },
@@ -298,6 +409,54 @@ export const MODULES: ModuleData[] = [
         },
       },
     ],
+    quiz: [
+      {
+        id: "modulo-3-q1",
+        question: {
+          es: "¿Qué botón tocás para empezar a contar el tiempo de estacionamiento?",
+          en: "Which button do you tap to start counting the parking time?",
+        },
+        options: [
+          { es: "► INICIAR", en: "► INICIAR" },
+          { es: "FINALIZAR", en: "FINALIZAR" },
+          { es: "CARGAR SALDO", en: "CARGAR SALDO" },
+        ],
+        correctIndex: 0,
+      },
+      {
+        id: "modulo-3-q2",
+        question: {
+          es: "¿Qué pasa si te olvidás de tocar FINALIZAR cuando te vas?",
+          en: "What happens if you forget to tap FINALIZAR when you leave?",
+        },
+        options: [
+          { es: "No pasa nada, la app lo hace sola a la hora", en: "Nothing, the app does it automatically after an hour" },
+          { es: "El sistema sigue consumiendo tu saldo", en: "The system keeps consuming your balance" },
+          { es: "Te devuelven el dinero al día siguiente", en: "You get your money back the next day" },
+        ],
+        correctIndex: 1,
+      },
+      {
+        id: "modulo-3-q3",
+        question: {
+          es: "¿Qué tenés que revisar antes de alejarte del auto al iniciar?",
+          en: "What should you check before walking away from the car after starting?",
+        },
+        options: [
+          { es: "Que aparezca un cartel verde confirmando que está activo", en: "That a green sign appears confirming it's active" },
+          { es: "Que el celular tenga más del 50% de batería", en: "That your phone has more than 50% battery" },
+          { es: "Nada, basta con haber tocado el botón", en: "Nothing, tapping the button is enough" },
+        ],
+        correctIndex: 0,
+      },
+    ],
+    alternativeResource: {
+      videoSrc: "/videos/modulo-3.mp4",
+      caption: {
+        es: "Mirá este video si todavía tenés dudas sobre cómo iniciar y finalizar el estacionamiento.",
+        en: "Watch this video if you still have doubts about how to start and end parking.",
+      },
+    },
   },
   {
     id: "modulo-4",
@@ -324,6 +483,11 @@ export const MODULES: ModuleData[] = [
       es: "Acordeón de preguntas frecuentes sobre tolerancia, saldo, infracciones y vencimiento.",
       en: "Accordion of frequently asked questions about tolerance, balance, fines, and expiration.",
     },
+    objectives: [
+      { es: "Resolver dudas frecuentes", en: "Resolve common doubts" },
+      { es: "Evitar multas evitables", en: "Avoid avoidable fines" },
+      { es: "Prevenir robos del vehículo", en: "Prevent vehicle theft" },
+    ],
     faqItems: [
       {
         id: "tolerancia",
