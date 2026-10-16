@@ -1,7 +1,8 @@
 "use client";
 
-import { ClipboardCheck, ParkingCircle, PlayCircle } from "lucide-react";
+import { ClipboardCheck, Download, ParkingCircle, PlayCircle } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import { PDF_GUIDE_SRC } from "@/lib/pdfGuide";
 
 export default function HeroSection() {
   const { language } = useLanguage();
@@ -21,6 +22,14 @@ export default function HeroSection() {
         : "This platform is an institutional initiative to help you use the SEMM app step by step: download the app, add balance, start your parking session, and avoid unnecessary fines. Content designed for all ages, with simple explanations and audiovisual resources.",
     startGuide: language === "es" ? "Comenzar guía" : "Start Guide",
     evaluation: language === "es" ? "Evaluación" : "Evaluation",
+    pdfPrompt:
+      language === "es"
+        ? "¿Ya manejás apps? Elegí el camino rápido"
+        : "Already know your way around apps? Take the fast path",
+    pdfLink:
+      language === "es"
+        ? "Descargá la guía rápida en PDF"
+        : "Download the quick guide (PDF)",
   };
 
   return (
@@ -71,6 +80,18 @@ export default function HeroSection() {
               {t.evaluation}
             </a>
           </div>
+
+          <p className="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-cyan-50">
+            <span>{t.pdfPrompt}</span>
+            <a
+              href={PDF_GUIDE_SRC[language]}
+              download
+              className="inline-flex items-center gap-1.5 font-bold text-amber-300 underline decoration-amber-300 decoration-2 underline-offset-2 hover:text-amber-200"
+            >
+              <Download className="h-4 w-4" aria-hidden="true" />
+              {t.pdfLink}
+            </a>
+          </p>
         </div>
       </div>
     </section>

@@ -1,8 +1,9 @@
 "use client";
 
 import type { ModuleData } from "./types";
-import { CheckCircle2, Lock, PlayCircle } from "lucide-react";
+import { CheckCircle2, Download, Lock, PlayCircle } from "lucide-react";
 import { pick, useLanguage } from "@/context/LanguageContext";
+import { pdfGuideModuleHref } from "@/lib/pdfGuide";
 
 interface ModuleCardProps {
   module: ModuleData;
@@ -32,6 +33,7 @@ export default function ModuleCard({
     ? pick(module.buttonText, language)
     : defaultButton;
   const title = pick(module.title, language);
+  const pdfLabel = language === "es" ? "Versión PDF directa" : "Direct PDF version";
 
   return (
     <article
@@ -97,6 +99,16 @@ export default function ModuleCard({
           </>
         )}
       </button>
+
+      <a
+        href={pdfGuideModuleHref(language, module.number)}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex w-fit items-center gap-1.5 self-center text-xs font-semibold text-cyan-800 underline decoration-cyan-300 decoration-2 underline-offset-2 hover:text-cyan-900"
+      >
+        <Download className="h-3.5 w-3.5" aria-hidden="true" />
+        {pdfLabel}
+      </a>
     </article>
   );
 }
