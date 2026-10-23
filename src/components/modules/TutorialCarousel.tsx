@@ -147,7 +147,7 @@ export default function TutorialCarousel({
                         aria-label={isLastSlide ? t.finishAria : t.nextAria}
                         className={`flex h-14 flex-1 items-center justify-center gap-2 rounded-xl text-base font-bold text-white transition disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400 ${
                           isLastSlide
-                            ? "bg-green-600 hover:bg-green-700"
+                            ? "bg-[var(--cb-success-600)] hover:bg-[var(--cb-success-700)]"
                             : "bg-cyan-800 hover:bg-cyan-900"
                         }`}
                       >

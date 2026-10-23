@@ -41,7 +41,7 @@ export default function ModuleCard({
         isLocked
           ? "border-slate-200 opacity-60"
           : isCompleted
-            ? "border-green-400 ring-1 ring-green-500 hover:shadow-md"
+            ? "border-[var(--cb-success-400)] ring-1 ring-[var(--cb-success-500)] hover:shadow-md"
             : "border-slate-200 hover:shadow-md"
       }`}
     >
@@ -60,7 +60,7 @@ export default function ModuleCard({
         ) : (
           isCompleted && (
             <CheckCircle2
-              className="ml-auto h-6 w-6 shrink-0 text-green-600"
+              className="ml-auto h-6 w-6 shrink-0 text-[var(--cb-success-600)]"
               aria-label={completedLabel}
             />
           )

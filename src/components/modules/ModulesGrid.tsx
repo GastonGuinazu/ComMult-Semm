@@ -102,7 +102,7 @@ export default function ModulesGrid() {
           </div>
           <div className="h-2.5 w-full overflow-hidden rounded-full bg-slate-200">
             <div
-              className="h-full rounded-full bg-green-500 transition-all duration-700 ease-out"
+              className="h-full rounded-full bg-[var(--cb-success-500)] transition-all duration-700 ease-out"
               style={{
                 width: `${(completedModules.length / TOTAL_MODULES) * 100}%`,
               }}

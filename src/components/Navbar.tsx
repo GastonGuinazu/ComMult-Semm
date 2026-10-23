@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Globe, LifeBuoy, Minus, Plus, ShieldCheck } from "lucide-react";
+import { Globe, Minus, Plus, ShieldCheck } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import ColorblindToggle from "./ColorblindToggle";
 
 const FONT_SCALE_STEPS = ["100%", "112.5%", "125%", "137.5%"] as const;
 
@@ -26,7 +27,6 @@ export default function Navbar() {
     textSizeGroup: language === "es" ? "Ajustar tamaño de texto" : "Adjust text size",
     decrease: language === "es" ? "Disminuir tamaño de texto" : "Decrease text size",
     increase: language === "es" ? "Aumentar tamaño de texto" : "Increase text size",
-    support: language === "es" ? "Soporte" : "Support",
     switchLanguage: language === "es"
       ? "Cambiar idioma a inglés"
       : "Switch language to Spanish",
@@ -112,13 +112,7 @@ export default function Navbar() {
             </button>
           </div>
 
-          <a
-            href="#contacto"
-            className="flex h-11 items-center gap-2 rounded-full bg-cyan-800 px-5 font-semibold text-white shadow-sm transition hover:bg-cyan-900"
-          >
-            <LifeBuoy className="h-5 w-5" aria-hidden="true" />
-            {t.support}
-          </a>
+          <ColorblindToggle />
         </div>
       </div>
     </header>

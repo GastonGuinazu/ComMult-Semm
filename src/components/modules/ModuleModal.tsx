@@ -8,6 +8,7 @@ import ModuleFourFaq from "./ModuleFourFaq";
 import ModuleQuiz from "./ModuleQuiz";
 import AlternativeVideo from "./AlternativeVideo";
 import ModuleObjectives from "./ModuleObjectives";
+import ColorblindToggle from "../ColorblindToggle";
 import { pick, useLanguage } from "@/context/LanguageContext";
 
 type ModuleStage = "content" | "quiz" | "alternative";
@@ -79,6 +80,8 @@ export default function ModuleModal({
               {title}
             </h2>
           </div>
+
+          <ColorblindToggle variant="icon" />
 
           <button
             ref={closeButtonRef}

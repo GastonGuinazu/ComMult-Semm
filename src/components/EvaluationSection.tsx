@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Gamepad2, X } from "lucide-react";
 import SimulatorModal from "./SimulatorModal";
+import ColorblindToggle from "./ColorblindToggle";
 import { useLanguage } from "@/context/LanguageContext";
 
 const GOOGLE_FORM_EMBED_URL =
@@ -150,15 +151,18 @@ export default function EvaluationSection() {
               >
                 {t.formModalTitle}
               </h3>
-              <button
-                ref={formCloseRef}
-                type="button"
-                onClick={() => setIsFormOpen(false)}
-                aria-label={t.formClose}
-                className="rounded-full p-2 text-slate-500 transition-colors hover:bg-slate-200"
-              >
-                <X className="h-5 w-5" aria-hidden="true" />
-              </button>
+              <div className="flex shrink-0 items-center gap-2">
+                <ColorblindToggle variant="icon" />
+                <button
+                  ref={formCloseRef}
+                  type="button"
+                  onClick={() => setIsFormOpen(false)}
+                  aria-label={t.formClose}
+                  className="rounded-full p-2 text-slate-500 transition-colors hover:bg-slate-200"
+                >
+                  <X className="h-5 w-5" aria-hidden="true" />
+                </button>
+              </div>
             </div>
 
             <div className="h-[80vh] w-full flex-1 overflow-x-hidden overflow-y-auto bg-slate-50">

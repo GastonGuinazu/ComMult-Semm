@@ -369,7 +369,7 @@ export default function InteractiveSimulator({
               <button
                 type="button"
                 onClick={finishMission}
-                className="flex items-center gap-2 rounded-xl bg-green-600 px-4 py-2 text-sm font-bold text-white transition hover:bg-green-700"
+                className="flex items-center gap-2 rounded-xl bg-[var(--cb-success-600)] px-4 py-2 text-sm font-bold text-white transition hover:bg-[var(--cb-success-700)]"
               >
                 {t.finishMission}
               </button>
@@ -406,7 +406,7 @@ export default function InteractiveSimulator({
           {showError && (
             <div
               role="alert"
-              className="pointer-events-none absolute left-3 right-3 top-4 z-20 rounded-xl border border-red-200 bg-red-600 px-3 py-2.5 text-center text-xs font-bold leading-snug text-white shadow-lg"
+              className="pointer-events-none absolute left-3 right-3 top-4 z-20 rounded-xl border border-[var(--cb-danger-200)] bg-[var(--cb-danger-600)] px-3 py-2.5 text-center text-xs font-bold leading-snug text-white shadow-lg"
             >
               {examToast}
             </div>
@@ -433,16 +433,16 @@ export default function InteractiveSimulator({
 
           {/* Success overlay */}
           {showSuccess && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-emerald-700/90 p-6 text-center">
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-[var(--cb-emerald-700)]/90 p-6 text-center">
               <CheckCircle2 className="h-16 w-16 text-white" aria-hidden="true" />
               <p className="text-2xl font-extrabold text-white">{t.successTitle}</p>
-              <p className="text-sm leading-relaxed text-emerald-100">
+              <p className="text-sm leading-relaxed text-[var(--cb-emerald-100)]">
                 {t.successBody}
               </p>
               <button
                 type="button"
                 onClick={finishMission}
-                className="mt-2 flex items-center gap-2 rounded-xl bg-white px-5 py-2.5 text-sm font-bold text-emerald-800 transition hover:bg-emerald-50"
+                className="mt-2 flex items-center gap-2 rounded-xl bg-white px-5 py-2.5 text-sm font-bold text-[var(--cb-emerald-800)] transition hover:bg-[var(--cb-emerald-50)]"
               >
                 {t.finishMission}
               </button>

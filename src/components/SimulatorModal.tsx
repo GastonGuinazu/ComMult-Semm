@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { X } from "lucide-react";
 import InteractiveSimulator from "./InteractiveSimulator";
+import ColorblindToggle from "./ColorblindToggle";
 import { useLanguage } from "@/context/LanguageContext";
 
 interface SimulatorModalProps {
@@ -66,6 +67,8 @@ export default function SimulatorModal({ isOpen, onClose }: SimulatorModalProps)
               {t.title}
             </h2>
           </div>
+
+          <ColorblindToggle variant="icon" />
 
           <button
             ref={closeButtonRef}

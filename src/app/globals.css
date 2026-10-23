@@ -2,6 +2,34 @@
 
 :root {
   color-scheme: light;
+
+  /* Colores "semánticos" (éxito / peligro). En modo daltónico se
+     reemplazan por una paleta azul/naranja, que sigue siendo
+     distinguible para daltonismo rojo-verde (protanopia/deuteranopia,
+     ~99% de los casos de daltonismo). */
+  --cb-success-400: #4ade80;
+  --cb-success-500: #22c55e;
+  --cb-success-600: #16a34a;
+  --cb-success-700: #15803d;
+  --cb-emerald-50: #ecfdf5;
+  --cb-emerald-100: #d1fae5;
+  --cb-emerald-700: #047857;
+  --cb-emerald-800: #065f46;
+  --cb-danger-200: #fecaca;
+  --cb-danger-600: #dc2626;
+}
+
+html[data-colorblind="true"] {
+  --cb-success-400: #60a5fa;
+  --cb-success-500: #3b82f6;
+  --cb-success-600: #2563eb;
+  --cb-success-700: #1d4ed8;
+  --cb-emerald-50: #eff6ff;
+  --cb-emerald-100: #dbeafe;
+  --cb-emerald-700: #1d4ed8;
+  --cb-emerald-800: #1e40af;
+  --cb-danger-200: #fed7aa;
+  --cb-danger-600: #ea580c;
 }
 
 html {
