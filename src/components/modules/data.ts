@@ -139,15 +139,15 @@ export const MODULES: ModuleData[] = [
       {
         id: "modulo-1-q1",
         question: {
-          es: "¿Cómo se llama la tienda de aplicaciones en un iPhone?",
-          en: "What is the app store called on an iPhone?",
+          es: "¿Cómo se llama la tienda de aplicaciones en tu celular?",
+          en: "What is the app store called on your phone?",
         },
         options: [
           { es: "Play Store", en: "Play Store" },
           { es: "App Store", en: "App Store" },
           { es: "SEMM Store", en: "SEMM Store" },
         ],
-        correctIndex: 1,
+        correctIndex: [0, 1],
       },
       {
         id: "modulo-1-q2",

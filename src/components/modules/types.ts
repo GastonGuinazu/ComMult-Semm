@@ -24,7 +24,7 @@ export interface QuizQuestion {
   id: string;
   question: Localized;
   options: Localized[];
-  correctIndex: number;
+  correctIndex: number | number[];
 }
 
 export interface AlternativeResource {

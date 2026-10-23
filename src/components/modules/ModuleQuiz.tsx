@@ -41,9 +41,12 @@ export default function ModuleQuiz({ questions, onResult }: ModuleQuizProps) {
 
   const handleAdvance = () => {
     if (isLastQuestion) {
-      const passed = questions.every(
-        (question, index) => answers[index] === question.correctIndex,
-      );
+      const passed = questions.every((question, index) => {
+        const selected = answers[index];
+        return Array.isArray(question.correctIndex)
+          ? question.correctIndex.includes(selected)
+          : selected === question.correctIndex;
+      });
       onResult(passed);
       return;
     }
