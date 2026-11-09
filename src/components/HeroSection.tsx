@@ -1,11 +1,14 @@
 "use client";
 
-import { ClipboardCheck, Download, ParkingCircle, PlayCircle } from "lucide-react";
+import { useState } from "react";
+import { ClipboardCheck, Download, ParkingCircle, PlayCircle, Video } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { PDF_GUIDE_SRC } from "@/lib/pdfGuide";
+import FullVideoModal from "./FullVideoModal";
 
 export default function HeroSection() {
   const { language } = useLanguage();
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
 
   const t = {
     badge:
@@ -30,6 +33,12 @@ export default function HeroSection() {
       language === "es"
         ? "Descargá la guía rápida en PDF"
         : "Download the quick guide (PDF)",
+    videoPrompt:
+      language === "es"
+        ? "¿Prefieren ver todo el paso a paso en video?"
+        : "Would you rather watch the full step-by-step video?",
+    videoLink:
+      language === "es" ? "Explicación en video" : "Video explanation",
   };
 
   return (
@@ -92,8 +101,22 @@ export default function HeroSection() {
               {t.pdfLink}
             </a>
           </p>
+
+          <p className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-cyan-50">
+            <span>{t.videoPrompt}</span>
+            <button
+              type="button"
+              onClick={() => setIsVideoOpen(true)}
+              className="inline-flex items-center gap-1.5 font-bold text-amber-300 underline decoration-amber-300 decoration-2 underline-offset-2 hover:text-amber-200"
+            >
+              <Video className="h-4 w-4" aria-hidden="true" />
+              {t.videoLink}
+            </button>
+          </p>
         </div>
       </div>
+
+      <FullVideoModal isOpen={isVideoOpen} onClose={() => setIsVideoOpen(false)} />
     </section>
   );
 }
