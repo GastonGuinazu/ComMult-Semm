@@ -20,3 +20,6 @@ export function pdfGuideModuleHref(language: Locale, moduleNumber: number): stri
   const base = PDF_GUIDE_SRC[language];
   return page ? `${base}#page=${page}` : base;
 }
+
+/** Full training plan document (only available in Spanish). Linked from the navbar. */
+export const TRAINING_PLAN_PDF_SRC = "/plan-integral-capacitacion-semm.pdf";
