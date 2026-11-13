@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Globe, Minus, Plus, ShieldCheck } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import ColorblindToggle from "./ColorblindToggle";
+import TrainingPlanLink from "./TrainingPlanLink";
 
 const FONT_SCALE_STEPS = ["100%", "112.5%", "125%", "137.5%"] as const;
 
@@ -113,6 +114,7 @@ export default function Navbar() {
           </div>
 
           <ColorblindToggle />
+          <TrainingPlanLink />
         </div>
       </div>
     </header>
